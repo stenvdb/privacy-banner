@@ -1,14 +1,17 @@
 {
-  "name": "Frontend-Boilerplate",
+  "name": "privacy-banner",
   "version": "1.0.0",
-  "description": "Starting point for new projects",
+  "description": "A small script to display a privacy notice banner",
   "author": "Sten Van den Bergh",
   "license": "MIT",
-  "private": true,
   "main": "lib/app.bundle.js",
   "browserslist": [
     "defaults"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stenvdb/privacy-banner.git"
+  },
   "platoonConfig": {
     "dirPublic": "lib",
     "dirClient": "src",
