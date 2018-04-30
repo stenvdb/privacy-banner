@@ -1,0 +1,121 @@
+{
+  "name": "Frontend-Boilerplate",
+  "version": "1.0.0",
+  "description": "Starting point for new projects",
+  "author": "Sten Van den Bergh",
+  "license": "MIT",
+  "private": true,
+  "main": "lib/app.bundle.js",
+  "browserslist": [
+    "defaults"
+  ],
+  "platoonConfig": {
+    "dirPublic": "lib",
+    "dirClient": "src",
+    "entryPoint": "privacyBanner.js",
+    "outputPath": "./",
+    "outputPublicPath": "/",
+    "outputJsPath": "./",
+    "outputCssPath": "./"
+  },
+  "babel": {
+    "extends": "./platoon-boilerplate/config/.babelrc"
+  },
+  "eslintConfig": {
+    "extends": "./platoon-boilerplate/config/eslint.js"
+  },
+  "stylelint": {
+    "extends": "./platoon-boilerplate/config/stylelint.js"
+  },
+  "scripts": {
+    "compile": "better-npm-run compile",
+    "compile:dev": "better-npm-run compile:dev",
+    "compile:prod": "better-npm-run compile:prod",
+    "server": "better-npm-run server",
+    "watch": "better-npm-run watch"
+  },
+  "betterScripts": {
+    "watch": {
+      "command": "babel-node platoon-boilerplate/bin/watch",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
+      }
+    },
+    "server": {
+      "command": "babel-node platoon-boilerplate/bin/dev-server",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
+      }
+    },
+    "compile": {
+      "command": "babel-node platoon-boilerplate/bin/compile",
+      "env": {
+        "DEBUG": "app:*"
+      }
+    },
+    "compile:dev": {
+      "command": "babel-node platoon-boilerplate/bin/compile",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
+      }
+    },
+    "compile:prod": {
+      "command": "babel-node platoon-boilerplate/bin/compile",
+      "env": {
+        "NODE_ENV": "production",
+        "BABEL_ENV": "production",
+        "DEBUG": "app:*"
+      }
+    }
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-minify": "^0.3.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "better-npm-run": "^0.1.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^0.28.10",
+    "css-mqpacker": "^6.0.2",
+    "debug": "^3.0.1",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-compat": "^2.2.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "ip": "^1.1.4",
+    "lodash": "^4.17.5",
+    "node-sass": "^4.7.2",
+    "optimize-css-assets-webpack-plugin": "^4.0.0",
+    "postcss-loader": "^2.1.1",
+    "postcss-normalize": "^4.0.0",
+    "raw-loader": "^0.5.1",
+    "resolve-url-loader": "^2.3.0",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "stylelint": "^9.1.2",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-webpack-plugin": "^0.10.4",
+    "svg-sprite-loader": "^3.7.1",
+    "svg-url-loader": "^2.3.2",
+    "svgo": "^1.0.5",
+    "svgo-loader": "^2.1.0",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.1.1",
+    "webpack-dev-server": "^3.1.1",
+    "webpack-manifest-plugin": "^2.0.0-rc.2"
+  }
+}
