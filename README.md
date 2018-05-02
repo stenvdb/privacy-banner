@@ -41,5 +41,8 @@ new PrivacyBanner({
   backgroundColor: '#3b3b3b',
   borderColor: '#474747',
   color: '#fff',
+  maxWidth: 1230,
+  paddingX: 15,
+  paddingY: 0
 });
 ```
