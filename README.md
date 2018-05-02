@@ -2,7 +2,7 @@
 A small script to display a privacy notice banner on your page. It appends a div right after the opening body tag with a message and a link to your privacy page. You can close the banner by agreeing to the notice.
 
 ## How it works
-When accepting the privacy notive banner, the scripts sets a cooky called `gdprPrivacyNoticeAccepted=true`.
+When accepting the privacy notive banner, the scripts sets a cookie called `gdprPrivacyNoticeAccepted=true`.
 
 Including this script does not magically make your website GDPR compliant. All it does when accepting the privacy notice, is setting that cookie. It is up to you to to use that concent cookie in the places you need to. 
 
