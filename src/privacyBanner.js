@@ -2,8 +2,7 @@ export default class PrivacyBanner {
   constructor(config = {}) {
     this.config = Object.assign({
       messageText: 'This website uses cookies to track your behavior and to improve your experience on the site. Do you agree',
-      acceptText: 'Yes',
-      declineText: 'No',
+      agreeText: 'Agree',
       readMoreText: 'Read more',
       readMoreLink: '/privacy',
       backgroundColor: '#3b3b3b',
@@ -34,23 +33,16 @@ export default class PrivacyBanner {
     document.body.style.transform = `translateY(${bannerHeight}px)`;
 
     // Attach events
-    this.banner.querySelector('.gdpr-privacy-notice-accept').addEventListener('click', this.accept.bind(this));
-    this.banner.querySelector('.gdpr-privacy-notice-decline').addEventListener('click', this.decline.bind(this));
+    this.banner.querySelector('.gdpr-privacy-notice-agree').addEventListener('click', this.agree.bind(this));
   }
 
   close() {
     this.banner.parentNode.removeChild(this.banner);
   }
 
-  accept(event) {
+  agree(event) {
     event.preventDefault();
     document.cookie = `gdprPrivacyNoticeAccepted=true; path=/; expires=${new Date(new Date() * 1 + 365 * 864e+5).toUTCString()}`; // eslint-disable-line no-mixed-operators
-    this.close();
-  }
-
-  decline(event) {
-    event.preventDefault();
-    document.cookie = `gdprPrivacyNoticeAccepted=false; path=/; expires=${new Date(new Date() * 1 + 365 * 864e+5).toUTCString()}`; // eslint-disable-line no-mixed-operators
     this.close();
   }
 
@@ -85,9 +77,8 @@ export default class PrivacyBanner {
     wrapper.innerHTML = `
       <div class="row">
         <div class="twelve columns" style="text-align: center;">
-          <p>${this.config.messageText} (<a href="${this.config.readMoreLink}" style="color: #fff; text-decoration: underline;">${this.config.readMoreText}</a>)?
-          <a href="#" style="color: #fff; text-decoration: underline;" class="gdpr-privacy-notice-accept">${this.config.acceptText}</a> -
-          <a href="#" style="color: #fff; text-decoration: underline;" class="gdpr-privacy-notice-decline">${this.config.declineText}</a></p>
+          <p style="margin: 0;">${this.config.messageText} (<a href="${this.config.readMoreLink}" style="color: #fff; text-decoration: underline;">${this.config.readMoreText}</a>)
+          <a href="#" style="color: #fff; text-decoration: underline;" class="gdpr-privacy-notice-agree">${this.config.agreeText}</a></p>
         </div>
       </div>
     `;
