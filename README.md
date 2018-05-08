@@ -36,8 +36,11 @@ You can optionally pass an object to override the defaults. Here is the full lis
 new PrivacyBanner({
   messageText: 'This website uses cookies to track your behavior and to improve your experience on the site. Do you agree',
   agreeText: 'Agree',
+  acceptText: 'Yes',
+  declineText: 'No',
   readMoreText: 'Read more',
   readMoreLink: '/privacy',
+  showYesNo: false,
   backgroundColor: '#3b3b3b',
   borderColor: '#474747',
   color: '#fff',

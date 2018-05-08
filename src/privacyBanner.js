@@ -3,8 +3,11 @@ export default class PrivacyBanner {
     this.config = Object.assign({
       messageText: 'This website uses cookies to track your behavior and to improve your experience on the site. Do you agree',
       agreeText: 'Agree',
+      acceptText: 'Yes',
+      declineText: 'No',
       readMoreText: 'Read more',
       readMoreLink: '/privacy',
+      showYesNo: false,
       backgroundColor: '#3b3b3b',
       borderColor: '#474747',
       color: '#fff',
@@ -36,7 +39,10 @@ export default class PrivacyBanner {
     document.body.style.transform = `translateY(${bannerHeight}px)`;
 
     // Attach events
-    this.banner.querySelector('.gdpr-privacy-notice-agree').addEventListener('click', this.agree.bind(this));
+    const agree = this.banner.querySelector('.gdpr-privacy-notice-agree');
+    if (agree) agree.addEventListener('click', this.agree.bind(this));
+    const decline = this.banner.querySelector('.gdpr-privacy-notice-decline');
+    if (decline) decline.addEventListener('click', this.decline.bind(this));
   }
 
   close() {
@@ -46,6 +52,12 @@ export default class PrivacyBanner {
   agree(event) {
     event.preventDefault();
     document.cookie = `gdprPrivacyNoticeAccepted=true; path=/; expires=${new Date(new Date() * 1 + 365 * 864e+5).toUTCString()}`; // eslint-disable-line no-mixed-operators
+    this.close();
+  }
+
+  decline(event) {
+    event.preventDefault();
+    document.cookie = `gdprPrivacyNoticeAccepted=false; path=/; expires=${new Date(new Date() * 1 + 365 * 864e+5).toUTCString()}`; // eslint-disable-line no-mixed-operators
     this.close();
   }
 
@@ -81,7 +93,13 @@ export default class PrivacyBanner {
       <div style="display: flex;margin: 0 auto;max-width: ${this.config.maxWidth}px;flex-flow: row wrap;align-items: flex-start;justify-content: flex-start;">
         <div style="text-align: center;flex: 0 1 auto;width: 100%;padding: ${this.config.paddingY}px ${this.config.paddingY}px;">
           <p style="margin: 0;">${this.config.messageText} (<a href="${this.config.readMoreLink}" style="color: #fff; text-decoration: underline;">${this.config.readMoreText}</a>)
-          <button style="color: #fff;border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-agree">${this.config.agreeText}</button></p>
+          ${this.config.showYesNo ? `
+            <button style="font: inherit;color: #fff;border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-agree">${this.config.acceptText}</button> -
+            <button style="font: inherit;color: #fff;border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-decline">${this.config.declineText}</button>
+          ` : `
+            <button style="font: inherit;color: #fff;border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-agree">${this.config.agreeText}</button>
+          `}
+          </p>
         </div>
       </div>
     `;
