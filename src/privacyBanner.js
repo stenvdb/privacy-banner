@@ -92,7 +92,8 @@ export default class PrivacyBanner {
     wrapper.innerHTML = `
       <div style="display: flex;margin: 0 auto;max-width: ${this.config.maxWidth}px;flex-flow: row wrap;align-items: flex-start;justify-content: flex-start;">
         <div style="text-align: center;flex: 0 1 auto;width: 100%;padding: ${this.config.paddingY}px ${this.config.paddingY}px;">
-          <p style="margin: 0;">${this.config.messageText} (<a href="${this.config.readMoreLink}" style="color: #fff; text-decoration: underline;">${this.config.readMoreText}</a>)
+          <p style="margin: 0;">${this.config.messageText}
+          ${this.config.readMoreText !== '' ? `(<a href="${this.config.readMoreLink}" style="color: #fff; text-decoration: underline;">${this.config.readMoreText}</a>)` : ''}
           ${this.config.showYesNo ? `
             <button style="font: inherit;color: #fff;border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-agree">${this.config.acceptText}</button> -
             <button style="font: inherit;color: #fff;border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-decline">${this.config.declineText}</button>
