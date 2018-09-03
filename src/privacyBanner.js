@@ -13,7 +13,8 @@ export default class PrivacyBanner {
       color: '#fff',
       maxWidth: 1230,
       paddingX: 15,
-      paddingY: 0
+      paddingY: 0,
+      slideFrom: 'top'
     }, config);
 
     this.init();
@@ -29,14 +30,18 @@ export default class PrivacyBanner {
   insertBanner(banner) {
     // Append div and setup
     this.banner = document.body.insertBefore(banner, document.body.firstChild);
-    document.body.addEventListener('transitionend', this.cleanUpAnimation.bind(this));
     const bannerHeight = this.banner.getBoundingClientRect().height;
 
     // Animate banner
-    this.banner.style.height = `${bannerHeight}px`;
-    this.banner.style.position = 'absolute';
-    document.body.style.transition = 'transform 0.2s ease';
-    document.body.style.transform = `translateY(${bannerHeight}px)`;
+    if (this.config.slideFrom === 'top') {
+      this.banner.style.height = `${bannerHeight}px`;
+      this.banner.style.position = 'absolute';
+      document.body.addEventListener('transitionend', this.cleanUpAnimation.bind(this));
+      document.body.style.transition = 'transform 0.2s ease';
+      document.body.style.transform = `translateY(${bannerHeight}px)`;
+    } else {
+      this.banner.style.transform = '';
+    }
 
     // Attach events
     const agree = this.banner.querySelector('.gdpr-privacy-notice-agree');
@@ -77,8 +82,8 @@ export default class PrivacyBanner {
     const wrapper = document.createElement('div');
     wrapper.classList.add('gdpr-privacy-notice');
     wrapper.style.cssText = `
-      position: relative;
-      top: 0;
+      ${this.config.slideFrom === 'top' ? 'position: relative;' : 'position: fixed;'}
+      ${this.config.slideFrom === 'top' ? 'top: 0;' : 'bottom: 0;'}
       left: 0;
       width: 100%;
       padding: 25px 0;
@@ -87,7 +92,7 @@ export default class PrivacyBanner {
       border-bottom: 1px solid ${this.config.borderColor};
       z-index: 1;
       transition: transform 0.2s ease;
-      transform: translateY(-100%);
+      transform: translateY(${this.config.slideFrom === 'top' ? '-100%' : '100%'});
     `;
     wrapper.innerHTML = `
       <div style="display: flex;margin: 0 auto;max-width: ${this.config.maxWidth}px;flex-flow: row wrap;align-items: flex-start;justify-content: flex-start;">

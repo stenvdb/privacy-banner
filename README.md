@@ -46,6 +46,7 @@ new PrivacyBanner({
   color: '#fff',
   maxWidth: 1230,
   paddingX: 15,
-  paddingY: 0
+  paddingY: 0,
+  slideFrom: 'top' // Can also be set to 'bottom'
 });
 ```
