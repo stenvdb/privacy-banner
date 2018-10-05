@@ -40,6 +40,7 @@ new PrivacyBanner({
   declineText: 'No',
   readMoreText: 'Read more', // Use empty string to hide
   readMoreLink: '/privacy',
+  yesNoPrefix: '',
   showYesNo: false,
   backgroundColor: '#3b3b3b',
   borderColor: '#474747',

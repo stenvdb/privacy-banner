@@ -7,6 +7,7 @@ export default class PrivacyBanner {
       declineText: 'No',
       readMoreText: 'Read more',
       readMoreLink: '/privacy',
+      yesNoPrefix: '',
       showYesNo: false,
       backgroundColor: '#3b3b3b',
       borderColor: '#474747',
@@ -100,6 +101,7 @@ export default class PrivacyBanner {
           <p style="margin: 0;">${this.config.messageText}
           ${this.config.readMoreText !== '' ? `(<a href="${this.config.readMoreLink}" style="color: #fff; text-decoration: underline;">${this.config.readMoreText}</a>)` : ''}
           ${this.config.showYesNo ? `
+            ${this.config.yesNoPrefix}
             <button style="font: inherit;color: #fff;border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-agree">${this.config.acceptText}</button> -
             <button style="font: inherit;color: #fff;border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-decline">${this.config.declineText}</button>
           ` : `
