@@ -2,7 +2,8 @@
 # Created by https://www.gitignore.io/api/osx,node,visualstudiocode
 
 ### PrivacyBanner ###
-platoon-boilerplate
+boilerplate
+examples
 
 ### Node ###
 # Logs
