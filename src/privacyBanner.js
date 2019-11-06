@@ -11,11 +11,13 @@ export default class PrivacyBanner {
       showYesNo: false,
       backgroundColor: '#3b3b3b',
       borderColor: '#474747',
+      borderRadius: 0,
       color: '#fff',
       maxWidth: 1230,
       paddingX: 15,
       paddingY: 0,
-      slideFrom: 'top'
+      slideFrom: 'top',
+      floating: false
     }, config);
 
     this.init();
@@ -86,11 +88,15 @@ export default class PrivacyBanner {
       ${this.config.slideFrom === 'top' ? 'position: relative;' : 'position: fixed;'}
       ${this.config.slideFrom === 'top' ? 'top: 0;' : 'bottom: 0;'}
       left: 0;
-      width: 100%;
+      ${this.config.floating !== false ? `margin: ${this.config.floating}px;` : ''}
+      width: ${this.config.floating !== false ? `calc(100% - (2 * ${this.config.floating}px)` : '100%'};
       padding: 25px 0;
       background: ${this.config.backgroundColor};
       color: ${this.config.color};
-      ${this.config.slideFrom === 'top' ? 'border-bottom:' : 'border-top:'} 1px solid ${this.config.borderColor};
+      ${this.config.floating !== false ? `border: 1px solid ${this.config.borderColor};` : `
+        ${this.config.slideFrom === 'top' ? 'border-bottom:' : 'border-top:'} 1px solid ${this.config.borderColor};
+      `}
+      border-radius: ${this.config.borderRadius}px;
       z-index: 999;
       transition: transform 0.2s ease;
       transform: translateY(${this.config.slideFrom === 'top' ? '-100%' : '100%'});
