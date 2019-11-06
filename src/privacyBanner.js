@@ -90,14 +90,14 @@ export default class PrivacyBanner {
       padding: 25px 0;
       background: ${this.config.backgroundColor};
       color: ${this.config.color};
-      border-bottom: 1px solid ${this.config.borderColor};
-      z-index: 1;
+      ${this.config.slideFrom === 'top' ? 'border-bottom:' : 'border-top:'} 1px solid ${this.config.borderColor};
+      z-index: 999;
       transition: transform 0.2s ease;
       transform: translateY(${this.config.slideFrom === 'top' ? '-100%' : '100%'});
     `;
     wrapper.innerHTML = `
       <div style="display: flex;margin: 0 auto;max-width: ${this.config.maxWidth}px;flex-flow: row wrap;align-items: flex-start;justify-content: flex-start;">
-        <div style="text-align: center;flex: 0 1 auto;width: 100%;padding: ${this.config.paddingY}px ${this.config.paddingY}px;">
+        <div style="text-align: center;flex: 0 1 auto;width: 100%;padding: ${this.config.paddingY}px ${this.config.paddingX}px;">
           <p style="margin: 0;">${this.config.messageText}
           ${this.config.readMoreText !== '' ? `(<a href="${this.config.readMoreLink}" style="color: ${this.config.color}; text-decoration: underline;">${this.config.readMoreText}</a>)` : ''}
           ${this.config.showYesNo ? `
