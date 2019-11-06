@@ -89,7 +89,7 @@ export default class PrivacyBanner {
       ${this.config.slideFrom === 'top' ? 'top: 0;' : 'bottom: 0;'}
       left: 0;
       ${this.config.floating !== false ? `margin: ${this.config.floating}px;` : ''}
-      width: ${this.config.floating !== false ? `calc(100% - (2 * ${this.config.floating}px)` : '100%'};
+      width: ${this.config.floating !== false ? `calc(100% - (2 * ${this.config.floating}px))` : '100%'};
       padding: 25px 0;
       background: ${this.config.backgroundColor};
       color: ${this.config.color};
