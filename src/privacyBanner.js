@@ -17,7 +17,8 @@ export default class PrivacyBanner {
       paddingX: 15,
       paddingY: 0,
       slideFrom: 'top',
-      floating: false
+      floating: false,
+      onRemove() {}
     }, config);
 
     this.init();
@@ -55,6 +56,7 @@ export default class PrivacyBanner {
 
   close() {
     this.banner.parentNode.removeChild(this.banner);
+    this.config.onRemove.call();
   }
 
   agree(event) {

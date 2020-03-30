@@ -48,6 +48,8 @@ new PrivacyBanner({
   maxWidth: 1230,
   paddingX: 15,
   paddingY: 0,
-  slideFrom: 'top' // Can also be set to 'bottom'
+  slideFrom: 'top' // Can also be set to 'bottom',
+  floating: false,
+  onRemove() {} // Callback whenever the banner is removed
 });
 ```
