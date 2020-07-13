@@ -1,23 +1,15 @@
 export default class PrivacyBanner {
   constructor(config = {}) {
     this.config = Object.assign({
-      messageText: 'This website uses cookies to track your behavior and to improve your experience on the site. Do you agree',
-      agreeText: 'Agree',
-      acceptText: 'Yes',
-      declineText: 'No',
-      readMoreText: 'Read more',
-      readMoreLink: '/privacy',
-      yesNoPrefix: '',
-      showYesNo: false,
-      backgroundColor: '#3b3b3b',
-      borderColor: '#474747',
-      borderRadius: 0,
-      color: '#fff',
-      maxWidth: 1230,
-      paddingX: 15,
-      paddingY: 0,
-      slideFrom: 'top',
-      floating: false,
+      messageText: 'This website uses cookies to improve your experience',
+      acceptText: 'I accept',
+      declineText: 'rather not',
+      cookieName: 'cookieprefs',
+      maxWidth: '100%',
+      margin: 16,
+      padding: 16,
+      slideFrom: 'bottom',
+      classList: 'cookie-banner',
       onRemove() {}
     }, config);
 
@@ -25,7 +17,7 @@ export default class PrivacyBanner {
   }
 
   init() {
-    if (document.cookie.indexOf('gdprPrivacyNoticeAccepted') === -1) {
+    if (document.cookie.indexOf(this.config.cookieName) === -1) {
       const div = this.createElement();
       this.insertBanner(div);
     }
@@ -34,23 +26,15 @@ export default class PrivacyBanner {
   insertBanner(banner) {
     // Append div and setup
     this.banner = document.body.insertBefore(banner, document.body.firstChild);
-    const bannerHeight = this.banner.getBoundingClientRect().height;
 
     // Animate banner
-    if (this.config.slideFrom === 'top') {
-      this.banner.style.height = `${bannerHeight}px`;
-      this.banner.style.position = 'absolute';
-      document.body.addEventListener('transitionend', this.cleanUpAnimation.bind(this));
-      document.body.style.transition = 'transform 0.2s ease';
-      document.body.style.transform = `translateY(${bannerHeight}px)`;
-    } else {
-      this.banner.style.transform = '';
-    }
+    this.banner.offsetWidth; // eslint-disable-line no-unused-expressions
+    this.banner.style.transform = '';
 
     // Attach events
-    const agree = this.banner.querySelector('.gdpr-privacy-notice-agree');
-    if (agree) agree.addEventListener('click', this.agree.bind(this));
-    const decline = this.banner.querySelector('.gdpr-privacy-notice-decline');
+    const accept = this.banner.querySelector('button[data-accept]');
+    if (accept) accept.addEventListener('click', this.accept.bind(this));
+    const decline = this.banner.querySelector('button[data-decline]');
     if (decline) decline.addEventListener('click', this.decline.bind(this));
   }
 
@@ -59,63 +43,37 @@ export default class PrivacyBanner {
     this.config.onRemove.call();
   }
 
-  agree(event) {
+  accept(event) {
     event.preventDefault();
-    document.cookie = `gdprPrivacyNoticeAccepted=true; path=/; expires=${new Date(new Date() * 1 + 365 * 864e+5).toUTCString()}`; // eslint-disable-line no-mixed-operators
+    document.cookie = `${this.config.cookieName}=true; path=/; expires=${new Date(new Date() * 1 + 365 * 864e+5).toUTCString()}`; // eslint-disable-line no-mixed-operators
     this.close();
   }
 
   decline(event) {
     event.preventDefault();
-    document.cookie = `gdprPrivacyNoticeAccepted=false; path=/; expires=${new Date(new Date() * 1 + 365 * 864e+5).toUTCString()}`; // eslint-disable-line no-mixed-operators
+    document.cookie = `${this.config.cookieName}=false; path=/; expires=${new Date(new Date() * 1 + 365 * 864e+5).toUTCString()}`; // eslint-disable-line no-mixed-operators
     this.close();
-  }
-
-  cleanUpAnimation() {
-    // Cleanup body
-    document.body.style.transition = '';
-    document.body.style.transform = '';
-
-    // Cleanup banner
-    this.banner.style.transition = '';
-    this.banner.style.position = 'static';
-    this.banner.style.transform = '';
-    this.banner.style.height = '';
   }
 
   createElement() {
     const wrapper = document.createElement('div');
-    wrapper.classList.add('gdpr-privacy-notice');
-    wrapper.style.cssText = `
-      ${this.config.slideFrom === 'top' ? 'position: relative;' : 'position: fixed;'}
+    wrapper.setAttribute('class', this.config.classList);
+    wrapper.style.cssText = `position: fixed;
       ${this.config.slideFrom === 'top' ? 'top: 0;' : 'bottom: 0;'}
       left: 0;
-      ${this.config.floating !== false ? `margin: ${this.config.floating}px;` : ''}
-      width: ${this.config.floating !== false ? `calc(100% - (2 * ${this.config.floating}px))` : '100%'};
-      padding: 25px 0;
-      background: ${this.config.backgroundColor};
-      color: ${this.config.color};
-      ${this.config.floating !== false ? `border: 1px solid ${this.config.borderColor};` : `
-        ${this.config.slideFrom === 'top' ? 'border-bottom:' : 'border-top:'} 1px solid ${this.config.borderColor};
-      `}
-      border-radius: ${this.config.borderRadius}px;
+      max-width: calc(100% - (2 * ${this.config.margin}px));
+      width: calc(${this.config.maxWidth} - (2 * ${this.config.margin}px));
+      margin: ${this.config.margin}px;
       z-index: 999;
-      transition: transform 0.2s ease;
-      transform: translateY(${this.config.slideFrom === 'top' ? '-100%' : '100%'});
+      transition: transform 0.2s ease 0.5s;
+      transform: translateY(${this.config.slideFrom === 'bottom' ? `calc(100% + ${this.config.margin}px * 2)` : `calc(-100% - ${this.config.margin}px * 2)`});
     `;
     wrapper.innerHTML = `
-      <div style="display: flex;margin: 0 auto;max-width: ${this.config.maxWidth}px;flex-flow: row wrap;align-items: flex-start;justify-content: flex-start;">
-        <div style="text-align: center;flex: 0 1 auto;width: 100%;padding: ${this.config.paddingY}px ${this.config.paddingX}px;">
-          <p style="margin: 0;">${this.config.messageText}
-          ${this.config.readMoreText !== '' ? `(<a href="${this.config.readMoreLink}" style="color: ${this.config.color}; text-decoration: underline;">${this.config.readMoreText}</a>)` : ''}
-          ${this.config.showYesNo ? `
-            ${this.config.yesNoPrefix}
-            <button style="font: inherit;color: ${this.config.color};border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-agree">${this.config.acceptText}</button> -
-            <button style="font: inherit;color: ${this.config.color};border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-decline">${this.config.declineText}</button>
-          ` : `
-            <button style="font: inherit;color: ${this.config.color};border: 0; background: none;cursor: pointer;text-decoration: underline;margin: 0; padding: 0;" class="gdpr-privacy-notice-agree">${this.config.agreeText}</button>
-          `}
-          </p>
+      <div style="padding: ${this.config.padding}px;${window.innerWidth >= 640 ? 'display: flex;align-items: flex-start;' : ''}">
+        <div style="${window.innerWidth >= 640 ? 'margin-right: 1em;' : ''}"><p style="margin: 0;">${this.config.messageText}</p></div>
+        <div style="${window.innerWidth >= 640 ? 'margin-left: auto;text-align: right;white-space: nowrap;' : 'margin-top: 1em;'}">
+          <button data-accept>${this.config.acceptText}</button><br>
+          <button data-decline>${this.config.declineText}</button>
         </div>
       </div>
     `;

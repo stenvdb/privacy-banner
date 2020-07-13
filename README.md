@@ -1,20 +1,15 @@
 # privacy-banner
-A small script to display a privacy notice banner on your page. It appends a div right after the opening body tag with a message and a link to your privacy page. You can close the banner by agreeing to the notice.
+Unopinionated privacy banner (aka cookie banner). 
 
 ## How it works
-When accepting the privacy notive banner, the scripts sets a cookie called `gdprPrivacyNoticeAccepted=true`.
+Displays a message on your website with an accept and decline button that sets a cookie ('true' or 'false') when clicked. It is up to you to use the consent cookie.
 
-Including this script does not magically make your website GDPR compliant. All it does when accepting the privacy notice, is setting that cookie. It is up to you to to use that concent cookie in the places you need to. 
-
-For example, Google Analytics sends the user IP by default. You could edit your ga script to prevent this for example:
+For example, include the analytics tool of your choice based on the user's choice:
 
 ```
-if (document.cookie.replace(/(?:(?:^|.*;\s*)gdprPrivacyNoticeAccepted\s*\=\s*([^;]*).*$)|^.*$/, '$1') === 'true') {
-    ga('set', 'anonymizeIp', undefined);
-} else {
-    ga('set', 'anonymizeIp', true);
+if (document.cookie.replace(/(?:(?:^|.*;\s*)myCookieName\s*\=\s*([^;]*).*$)|^.*$/, '$1') === 'true') {
+  // Include analytics
 }
-ga('send', 'pageview');
 ```
 
 ## Installation
@@ -31,25 +26,17 @@ new PrivacyBanner();
 ```
 
 ## Options
-You can optionally pass an object to override the defaults. Here is the full list of default settings:
 ```
 new PrivacyBanner({
-  messageText: 'This website uses cookies to track your behavior and to improve your experience on the site. Do you agree',
-  agreeText: 'Agree',
-  acceptText: 'Yes',
-  declineText: 'No',
-  readMoreText: 'Read more', // Use empty string to hide
-  readMoreLink: '/privacy',
-  yesNoPrefix: '',
-  showYesNo: false,
-  backgroundColor: '#3b3b3b',
-  borderColor: '#474747',
-  color: '#fff',
-  maxWidth: 1230,
-  paddingX: 15,
-  paddingY: 0,
-  slideFrom: 'top' // Can also be set to 'bottom',
-  floating: false,
+  messageText: 'This website uses cookies to improve your experience',
+  acceptText: 'I accept',
+  declineText: 'rather not',
+  cookieName: 'cookieprefs',
+  maxWidth: '100%',
+  margin: 16,
+  padding: 16,
+  slideFrom: 'bottom', // Accepted values: 'top' or 'bottom',
+  classList: 'cookie-banner',
   onRemove() {} // Callback whenever the banner is removed
 });
 ```
