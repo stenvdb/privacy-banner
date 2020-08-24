@@ -4,6 +4,7 @@
 ### PrivacyBanner ###
 boilerplate
 examples
+.babelrc
 
 ### Node ###
 # Logs
