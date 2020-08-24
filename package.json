@@ -20,15 +20,6 @@
     "dirClient": "src",
     "entryPoint": "privacyBanner.js"
   },
-  "babel": {
-    "extends": "./boilerplate/config/.babelrc"
-  },
-  "eslintConfig": {
-    "extends": "./boilerplate/config/eslint.js"
-  },
-  "stylelint": {
-    "extends": "./boilerplate/config/stylelint.js"
-  },
   "scripts": {
     "compile": "DEBUG=boilerplate:* NODE_ENV=development SERVER=0 babel-node boilerplate/bin/compile",
     "compile:dev": "DEBUG=boilerplate:* NODE_ENV=development SERVER=0 babel-node boilerplate/bin/compile",
